@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->unsignedBigInteger('manufacturer_id');
+            //$table->unsignedBigInteger('manufacturer_id');
             $table->string('type');
             $table->integer('year');  
-            //$table->string('image_url')->nullable();
+            $table->string('image_url')->nullable();
             $table->timestamps();
 
-            $table->foreign('manufacturer_id')->references('id')->on('manufacturer')
-                                                ->onUpdate('casade')
-                                                ->onDelete('casade');
+            // $table->foreign('manufacturer_id')->references('id')->on('manufacturers')
+            //                                     ->onUpdate('casade')
+            //                                     ->onDelete('casade');
             
         });
     }
