@@ -18,6 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+    Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
+    Route::post('/cars', [CarController::class, 'store'])->name('cars.store');
+
 
 });
 

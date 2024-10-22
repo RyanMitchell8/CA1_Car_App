@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class CarController extends Controller
 {
@@ -21,7 +23,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('cars.create');
     }
 
     /**
@@ -29,7 +31,30 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->vaildate([
+            'model' => 'required',
+            'type' => 'required|max:100',
+            'year' => 'required|integer',
+            'image_url' => 'required|image_url|mimes:jpeg,jpg,gif|max:2048',
+        ]);
+        
+        if($request->hasFile('image_url')){
+
+            $image_urlName = time().'.'.$request->image->extension();
+            $request->image_url->move(public_path('images/cars'), image_urlName);
+        }
+
+        Car::create([
+            'model' => $request->model,
+            'type' => $request->type,
+            'year' => $request->year,
+            'image_url' => $image_urlName,
+            'created_at' => now(),
+            'updated_at' => now(),
+
+        ]);
+
+        return to_route('cars.index')->with('success', 'Car created successfully');
     }
 
     /**
@@ -37,7 +62,7 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        return view('cars.show')->with('car', $car);
     }
 
     /**
