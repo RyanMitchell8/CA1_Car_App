@@ -31,16 +31,16 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $request->vaildate([
+        $request->validate([
             'model' => 'required',
             'type' => 'required|max:100',
             'year' => 'required|integer',
-            'image_url' => 'required|image_url|mimes:jpeg,jpg,gif|max:2048',
+            'image_url' => 'required|image|mimes:jpeg,jpg,gif,png|max:2048',
         ]);
         
         if($request->hasFile('image_url')){
 
-            $image_urlName = time().'.'.$request->image->extension();
+            $image_urlName = time().'.'.$request->image_url->extension();
             $request->image_url->move(public_path('images/cars'), image_urlName);
         }
 
