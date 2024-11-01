@@ -41,7 +41,7 @@ class CarController extends Controller
         if($request->hasFile('image_url')){
 
             $image_urlName = time().'.'.$request->image_url->extension();
-            $request->image_url->move(public_path('images/cars'), image_urlName);
+            $request->image_url->move(public_path('images/cars'), $image_urlName);
         }
 
         Car::create([
