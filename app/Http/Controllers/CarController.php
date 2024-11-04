@@ -70,7 +70,7 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        return view('cars.edit', compact('car'));
     }
 
     /**
@@ -78,7 +78,27 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        $validatedData  = $request->validate([
+            'model' => 'required',
+            'type' => 'required|max:100',
+            'year' => 'required|integer',
+            'image_url' => 'nullable|image|mimes:jpeg,jpg,gif,png|max:2048',
+        ]);
+
+        $data = $request->only(['model', 'type', 'year']);
+
+        if ($request->hasFile('image_url')) {
+            if ($car->image_url && file_exists(public_path($car->image_url))) {
+                unlink(public_path($car->image_url));
+            }
+
+            $image_url = time() . '.' . $request->file('image_url')->extension();
+            $request->file('image_url')->move(public_path('images/cars'), $image_url);
+            $data['image_url'] = $image_url;
+        }
+        $car->update($data);
+ 
+        return redirect()->route('cars.index')->with('success', 'Car updated successfully');
     }
 
     /**
