@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function () {
 
 
     // Form method, run when create form is submitted
-    Route::post('/cars', [CarController::class, 'store'])->name('cars.store');    
+    Route::post('/cars', [CarController::class, 'store'])->name('cars.store');
+    
+    Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
         
 });
 
