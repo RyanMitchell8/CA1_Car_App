@@ -10,6 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 bg-blue-500">
                     <h3 class="font-semibold text-lg mb-4">List of Cars:</h3>
+
+                    <!-- Search Bar Form -->
+                    <form method="GET" action="{{ route('cars.index') }}" class="mb-6">
+                        <input type="text" name="search" value="{{ request()->get('search') }}" class="px-4 py-2 border rounded" placeholder="Search cars..." />
+                        <button type="submit" class="ml-2 bg-white text-black px-4 py-2 rounded">Search</button>
+                    </form>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($cars as $car)
                         <div class="flex flex-col">
@@ -30,7 +37,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-gray-600 font-bold py-2 px-4 rounded">
-                                                                        Delete
+                                        Delete
                                     </button>
                                 </form>
                             </div>

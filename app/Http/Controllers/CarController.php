@@ -12,11 +12,27 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request)
+{
+    // Get the search query from the request
+    $search = $request->get('search');
+    
+    // Check if a search query is present
+    if ($search) {
+        // If search is provided, filter cars by model, type, or year
+        $cars = Car::where('model', 'like', "%{$search}%")
+            ->orWhere('type', 'like', "%{$search}%")
+            ->orWhere('year', 'like', "%{$search}%")
+            ->get();
+    } else {
+        // If no search query, get all cars
         $cars = Car::all();
-        return view('cars.index', compact('cars'));
     }
+
+    // Pass the cars data to the view
+    return view('cars.index', compact('cars'));
+}
+
 
     /**
      * Show the form for creating a new resource.
