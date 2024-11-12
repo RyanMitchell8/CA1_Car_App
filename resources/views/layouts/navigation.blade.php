@@ -19,9 +19,11 @@
                         {{ __('View All Cars') }}
                     </x-nav-link>
                    
-                    <x-nav-link :href="route('cars.create')" :active="request()->routeIs('cars.create')">
-                        {{ __('Create New Car') }}
-                    </x-nav-link>
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('cars.create')" :active="request()->routeIs('cars.create')">
+                            {{ __('Create New Car') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
