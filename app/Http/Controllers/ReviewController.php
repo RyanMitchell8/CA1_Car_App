@@ -26,9 +26,21 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Car $car)
     {
-        //
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        $car->reviews()->create([
+            'user_id' => auth()->id(),
+            'rating' => $request->input('rating'),
+            'comment' => $request->input('comment'),
+            'car_id' => $car->id,
+        ]);
+
+        return redirect()->route('cars.show', $car)->with('success', 'Review created successfully!');
     }
 
     /**

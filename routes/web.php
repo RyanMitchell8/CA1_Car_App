@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function () {
     
     // Handle the request to delete a specific car
     Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
+
+
+    Route::resource('reviews', ReviewController::class);
+
+    Route::post('cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
 // Include authentication routes from auth.php

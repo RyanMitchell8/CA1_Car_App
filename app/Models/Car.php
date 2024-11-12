@@ -18,4 +18,9 @@ class Car extends Model
         'updated_at',
 
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

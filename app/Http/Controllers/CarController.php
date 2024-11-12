@@ -84,8 +84,8 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        // Pass the car data to the 'cars.show' view for display
-        return view('cars.show')->with('car', $car);
+        $car->load('reviews.user');
+        return view('cars.show', compact('car'));
     }
 
     /**
