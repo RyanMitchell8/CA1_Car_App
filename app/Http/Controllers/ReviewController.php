@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use Illuminate\Http\Request;
+use App\Models\Car;
+use Illuminate\Http\Request; 
 
 class ReviewController extends Controller
 {
@@ -37,7 +38,7 @@ class ReviewController extends Controller
             'user_id' => auth()->id(),
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
-            'car_id' => $car->id,
+            'car_id' => $car->id
         ]);
 
         return redirect()->route('cars.show', $car)->with('success', 'Review created successfully!');
