@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Models\Car;
 use Illuminate\Http\Request; 
 
 class ReviewController extends Controller
@@ -44,24 +43,18 @@ class ReviewController extends Controller
         return redirect()->route('cars.show', $car)->with('success', 'Review created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Review $review)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Review $review)
     {
-    
+      
         if (auth()->user()->id !== $review->user_id && auth()->user()->role !== 'admin') {
-            return redirect()->route('cars.indes')->with('error', 'Access denied.');
+            return redirect()->route('cars.index')->with('error', 'Access denied.');
         }
-        return view('cars.edit', compact('car'));
+
+        // return view('cars.edit', compact('car'));
         
         return view('reviews.edit', compact('review'));
     }
@@ -82,6 +75,18 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        // Check if the current user is the owner of the review or an admin
+        if ($review->user_id === auth()->id() || auth()->user()->role === 'admin') {
+            // Delete the review from the database
+            $review->delete();
+
+            // Flash success message and redirect
+            return redirect()->route('cars.show', $review->car_id)
+                ->with('success', 'Review deleted successfully.');
+        }
+
+        // If the user is not authorized to delete the review
+        return redirect()->route('cars.show', $review->car_id)
+            ->with('error', 'You are not authorized to delete this review.');
     }
 }

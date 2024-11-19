@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ReviewController;
+use Illuminate\Support\Facades\Route;
+
 
 // Route for the welcome page
 Route::get('/', function () {
@@ -50,7 +51,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('reviews', ReviewController::class);
 
     Route::post('cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-});
 
+    Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+    
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+});
+    
 // Include authentication routes from auth.php
 require __DIR__.'/auth.php';
