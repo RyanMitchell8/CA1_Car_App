@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\GarageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -55,6 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
     
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    Route::resource('garages', GarageController::class)->middleware('auth');
 });
     
 // Include authentication routes from auth.php

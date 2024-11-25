@@ -23,4 +23,9 @@ class Car extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function garages()
+    {
+        return $this->belongsToMany(Garage::class); // many to many
+    }
 }
