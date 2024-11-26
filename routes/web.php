@@ -58,6 +58,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
     Route::resource('garages', GarageController::class)->middleware('auth');
+
+    Route::get('/garages', [GarageController::class, 'index'])->name('garages.index');
+    Route::get('/garages/create', [GarageController::class, 'create'])->name('garages.create');
+    Route::get('/garages/{garage}', [GarageController::class, 'show'])->name('garages.show');
+    Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
+    Route::get('/garages/{garage}/edit', [GarageController::class, 'edit'])->name('garages.edit');
+    Route::delete('/garages/{garage}', [GarageController::class, 'destroy'])->name('garages.destroy');
 });
     
 // Include authentication routes from auth.php
