@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             {{ __('All Cars') }}
         </h2>
     </x-slot>
  
-    <div class="py-12">
+    <div class="py-12 bg-gray-700">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 bg-red-700">
-                    <h3 class="font-semibold text-lg mb-4">List of Cars:</h3>
+                <div class="p-6 text-gray-900 bg-black">
+                    <h3 class="font-semibold text-lg text-white mb-4">List of Cars:</h3>
                             <x-car-card
                                 :model="$car->model"
                                 :type="$car->type"
@@ -17,9 +17,9 @@
                                 :year="$car->year"
                             />
 
-                            <h4 class="font-semibold text-md mt-8">Reviews</h4>
+                            <h4 class="font-semibold text-md text-white mt-8">Reviews</h4>
                             @if($car->reviews->isEmpty())
-                                <p class="text-gray-600">No reviews yet.</p>
+                                <p class="text-white">No reviews yet.</p>
                             @else
                                 <ul class="mt-4 space-y-4">
                                     @foreach($car->reviews as $review)
@@ -47,11 +47,11 @@
                                 </ul>
                             @endif
 
-                            <h4 class="font-semibold text-md mt-8"> Add a Review</h4>
+                            <h4 class="font-semibold text-md text-white mt-8"> Add a Review</h4>
                             <form action="{{ route('reviews.store', $car) }}" method="POST" class="mt-4">
                                 @csrf
                                 <div class="mb-4">
-                                    <label for="rating" class="block font-medium text-sm text-gray-700">Rating:</label>
+                                    <label for="rating" class="block font-medium text-sm text-white">Rating:</label>
                                     <select name="rating" id="rating" class="mt-1 block w-full" required>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="comment" class="block font-meduim text-sm text-gray-700">Rating</label>
+                                    <label for="comment" class="block font-meduim text-sm text-white">Rating</label>
                                     <textarea name="comment" id="comment" rows="3" class="mt-1 block w-full" placeholder="write your review here..."></textarea>
                                 </div>
 

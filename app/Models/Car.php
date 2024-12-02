@@ -28,4 +28,5 @@ class Car extends Model
     {
         return $this->belongsToMany(Garage::class); // many to many
     }
+    
 }

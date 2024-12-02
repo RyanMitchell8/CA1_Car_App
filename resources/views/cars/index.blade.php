@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-black leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             {{ __('All Cars') }}
         </h2>
     </x-slot>
@@ -8,8 +8,8 @@
     <div class="py-12 bg-gray-700">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 bg-red-800">
-                    <h3 class="font-semibold text-lg mb-4">List of Cars:</h3>
+                <div class="p-6 text-gray-900 bg-black">
+                    <h3 class="font-semibold text-white mb-4">List of Cars:</h3>
 
                     <!-- Search Bar Form -->
                     <form method="GET" action="{{ route('cars.index') }}" class="mb-6">

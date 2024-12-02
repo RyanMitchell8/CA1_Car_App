@@ -13,9 +13,10 @@ class GarageController extends Controller
      */
     public function index()
     {
-        $garages = Garage::all();
-        return view('garages.index', compact('garages'));
+        $garages = Garage::with('cars')->get(); // Fetch garages with related cars
+        return view('garages.index', compact('garages')); // Pass data to the view
     }
+
 
     /**
      * Show the form for creating a new resource.
