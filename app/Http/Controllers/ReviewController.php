@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\Car;  // Added import for Car model
 use Illuminate\Http\Request; 
 
 class ReviewController extends Controller
@@ -28,11 +29,17 @@ class ReviewController extends Controller
      */
     public function store(Request $request, Car $car)
     {
+        // Check if the user is authenticated
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in to leave a review.');
+        }
+
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:1000',
         ]);
 
+        // Create the review for the car
         $car->reviews()->create([
             'user_id' => auth()->id(),
             'rating' => $request->input('rating'),
@@ -43,19 +50,17 @@ class ReviewController extends Controller
         return redirect()->route('cars.show', $car)->with('success', 'Review created successfully!');
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Review $review)
     {
-      
+        // Ensure that the user is the owner of the review or an admin
         if (auth()->user()->id !== $review->user_id && auth()->user()->role !== 'admin') {
             return redirect()->route('cars.index')->with('error', 'Access denied.');
         }
 
-        // return view('cars.edit', compact('car'));
-        
+        // Return the edit view with the review
         return view('reviews.edit', compact('review'));
     }
 
@@ -64,10 +69,17 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
+        // Validate the input fields
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        // Update the review
         $review->update($request->only(['rating', 'comment']));
 
-        return redirect()->route('cars.show', $review->car_id)
-        ->with('success', 'Review updated successfully!');
+        return redirect()->route('cars.show', $review->car->id)
+            ->with('success', 'Review updated successfully!');
     }
 
     /**
@@ -75,18 +87,18 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        // Check if the current user is the owner of the review or an admin
+        // Ensure the user is authorized to delete the review
         if ($review->user_id === auth()->id() || auth()->user()->role === 'admin') {
             // Delete the review from the database
             $review->delete();
 
             // Flash success message and redirect
-            return redirect()->route('cars.show', $review->car_id)
+            return redirect()->route('cars.show', $review->car->id)
                 ->with('success', 'Review deleted successfully.');
         }
 
         // If the user is not authorized to delete the review
-        return redirect()->route('cars.show', $review->car_id)
+        return redirect()->route('cars.show', $review->car->id)
             ->with('error', 'You are not authorized to delete this review.');
     }
 }
