@@ -5,6 +5,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GarageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 // Route for the welcome page
@@ -65,6 +66,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
     Route::get('/garages/{garage}/edit', [GarageController::class, 'edit'])->name('garages.edit');
     Route::delete('/garages/{garage}', [GarageController::class, 'destroy'])->name('garages.destroy');
+    // Fallback route to handle all unmatched URLs
+    Route::fallback(function () {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // If authenticated, redirect to the 'cars.index' page with an error message
+            return redirect()->route('cars.index')->with('error', 'Please give me a A');
+        }
+        
+        // If not authenticated, redirect to the homepage
+        return redirect('/');
+    });
 });
     
 // Include authentication routes from auth.php
