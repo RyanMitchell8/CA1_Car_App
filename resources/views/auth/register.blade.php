@@ -40,15 +40,24 @@
         </div>
 
         <div>
+            <!-- Label for the dropdown menu, providing an accessible name for screen readers -->
             <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            
+            <!-- Dropdown menu for selecting a role. It is required and has default styling classes for spacing and appearance -->
             <select id="role" name="role" class="mt-1 block w-full" required>
+                <!-- Option for 'User' role, selected by default -->
                 <option value="user" selected>User</option>
+                <!-- Option for 'Admin' role -->
                 <option value="admin">Admin</option>
             </select>
+            
+            <!-- Laravel Blade directive to display error messages related to the 'role' field -->
             @error('role')
+                <!-- Displays error message in red text if validation fails for 'role' -->
                 <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
             @enderror
         </div>
+
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
