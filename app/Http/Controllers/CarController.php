@@ -40,6 +40,9 @@ class CarController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->role !== 'admin') {
+            return redirect()->route('cars.index')->with('error', 'Access Denied.');
+        }
         return view('cars.create');
     }
 

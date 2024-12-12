@@ -22,18 +22,20 @@
                                     :image="$garage->image"
                                 />
                             </a>
-                            <div class="mt-2 flex space-x-2">
-                                <a href="{{ route('garages.edit', $garage) }}" class="text-gray-600 bg-orange-300 hover:bg-orange-700 font-bold py-2 px-4 rounded">
-                                    Edit
-                                </a>
-                                <form action="{{ route('garages.destroy', $garage)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this car?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-gray-600 font-bold py-2 px-4 rounded">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
+                            @if(Auth::user()->role === 'admin')
+                                <div class="mt-2 flex space-x-2">
+                                    <a href="{{ route('garages.edit', $garage) }}" class="text-gray-600 bg-orange-300 hover:bg-orange-700 font-bold py-2 px-4 rounded">
+                                        Edit
+                                    </a>
+                                    <form action="{{ route('garages.destroy', $garage)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this car?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-gray-600 font-bold py-2 px-4 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                         @endforeach
                     </div>

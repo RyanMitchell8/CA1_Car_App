@@ -19,13 +19,17 @@
                         {{ __('View All Cars') }}
                     </x-nav-link>
                    
-                    <x-nav-link :href="route('cars.create')" :active="request()->routeIs('cars.create')">
-                        {{ __('Create New Car') }}
-                    </x-nav-link>
-                    
-                    <x-nav-link :href="route('garages.create')" :active="request()->routeIs('garages.create')">
-                        {{ __('Create New Garage') }}
-                    </x-nav-link>
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('cars.create')" :active="request()->routeIs('cars.create')">
+                            {{ __('Create New Car') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->role === 'admin')
+                        <x-nav-link :href="route('garages.create')" :active="request()->routeIs('garages.create')">
+                            {{ __('Create New Garage') }}
+                        </x-nav-link>
+                    @endif
 
                     <x-nav-link :href="route('garages.index')" :active="request()->routeIs('garages.index')">
                         {{ __('View All Garages') }}
